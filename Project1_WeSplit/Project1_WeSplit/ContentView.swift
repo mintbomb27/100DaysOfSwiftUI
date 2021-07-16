@@ -9,16 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var amount = "0"
-    @State private var numberPeople = 2
+    @State private var amount = ""
+    @State private var numberPeople = "2"
     @State private var tipPercentage = 2
     let tips = [2,5,10,15,20]
     
-    var finalAmount: Double {
-        let peopleCount = Double(numberPeople + 2)
+    var total: Double {
         let tipP = Double(tips[tipPercentage])
         let dAmount = Double(amount) ?? 0
-        var finalAmt = Double((tipP/100.0)*dAmount + dAmount)
+        let finalAmt = Double((tipP/100.0)*dAmount + dAmount)
+        return finalAmt
+    }
+    
+    var perPerson: Double {
+        let peopleCount = Double(numberPeople) ?? 0 + 2
+        var finalAmt = total
         finalAmt = finalAmt/peopleCount
         return finalAmt
     }
@@ -26,13 +31,15 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             Form{
-                Section{
+                Section(header: Text("Amount Details")){
                     TextField("Amount", text: $amount)
                     .keyboardType(.decimalPad)
                     Picker("Number of People", selection: $numberPeople){
-                        ForEach(2 ..< 101){
-                            Text("\($0)")
-                        }
+//                        ForEach(2 ..< 101){
+//                            Text("\($0)")
+//                        }
+                        TextField("Number of People", text: $numberPeople)
+                            .keyboardType(.numberPad)
                     }
                 }
                 Section(header: Text("How much do you wanna tip?")){
@@ -42,7 +49,12 @@ struct ContentView: View {
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                 }
-                Text("Amount: ₹\(finalAmount, specifier:"%0.2f")")
+                Section(header: Text("Total Amount")){
+                    Text("Amount: ₹ \(total, specifier:"%0.2f")")
+                }
+                Section(header: Text("Amount per Person")){
+                    Text("Amount: ₹ \(perPerson, specifier:"%0.2f")")
+                }
             }
         .navigationBarTitle("WeSplit")
         }
