@@ -52,8 +52,8 @@
 		8CAC0C8426A43AE40032FB95 /* Challenge1_Converter */ = {
 			isa = PBXGroup;
 			children = (
-				8CAC0C8526A43AE40032FB95 /* Challenge1_ConverterApp.swift */,
 				8CAC0C8726A43AE40032FB95 /* ContentView.swift */,
+				8CAC0C8526A43AE40032FB95 /* Challenge1_ConverterApp.swift */,
 				8CAC0C8926A43AEC0032FB95 /* Assets.xcassets */,
 				8CAC0C8E26A43AEC0032FB95 /* Info.plist */,
 				8CAC0C8B26A43AEC0032FB95 /* Preview Content */,

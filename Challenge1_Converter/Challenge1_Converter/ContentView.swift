@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
+    //MARK: VARIABLES
     let measures: [String:[String]] = [
         "Length": ["m","km", "ft", "yd", "mi"],//4
         "Temperature": ["C","F", "K"], //2
@@ -26,6 +27,8 @@ struct ContentView: View {
     var inputs: [String]{
         return measures[selectedUnit] ?? [""]
     }
+    
+    //INPUT VALUE CONVERTING TO STANDARD
     var inputValue: Double {
         var convertedMeasure = Double(measurement) ?? 0;
         switch(selectedUnit){
@@ -63,6 +66,8 @@ struct ContentView: View {
         }
         return convertedMeasure;
     }
+    
+    //OUTPUT VALUE CONVERTING TO REQUIRED
     var outputValue: Double {
         var convertedMeasure = inputValue;
         switch(selectedUnit){
@@ -101,39 +106,41 @@ struct ContentView: View {
         return convertedMeasure;
     }
     
+    //MARK: BODY
     var body: some View {
         NavigationView{
             Form{
                 Picker(selection: $selectedMeasure, label:Text("Select your measure")){
                     ForEach(0 ..< measures.count){
                         Text(Array(measures.keys)[$0])
-                    }
-                }
+                    }//FOR
+                }//MEASURE SELECT PICKER
                 Section(header: Text("Input Measurement")){
                     TextField("Input your measurement", text: $measurement)
-                        .keyboardType(.decimalPad)
+                        .keyboardType(.decimalPad)//TEXTFIELD
                     Picker(selection: $selectedInput, label:Text("Select your input")){
                         ForEach(0 ..< inputs.count, id:\.self){
                             Text(inputs[$0])
-                        }
-                    }
+                        }//FOR
+                    }//INPUT PICKER
                     .pickerStyle(SegmentedPickerStyle())
-                }
+                }//INPUT SECTION
                 Section(header: Text("Output Measurement")){
                     Text("\(outputValue)")
                     Picker(selection: $selectedOutput, label:Text("Select your output")){
                         ForEach(0 ..< inputs.count, id:\.self){
                             Text(inputs[$0])
-                        }
-                    }
+                        }//FOR
+                    }//OUTPUT PICKER
                     .pickerStyle(SegmentedPickerStyle())
-                }
-            }
+                }//OUTPUT SECTION
+            }//FORM
             .navigationBarTitle("Convert!")
-        }
+        }//NAVIGATION VIEW
     }
 }
 
+//MARK:PREVIEW
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
